@@ -10,7 +10,7 @@
 		{
 			font-family: Monospace;
 			font-weight: bold;
-			background-color: #ccccff;
+			background-color: #99D9EA;
 			margin: 0px;
 			overflow: hidden;
 		}
@@ -208,8 +208,8 @@
 	
 	void main()
 	{
-		float alphav = cnoise(vec3(10.0*vUv.x, 10.0*vUv.y, time));
-		gl_FragColor = vec4(1,1,1,alphav/2.0);
+		float alphav = abs(cnoise(vec3(10.0*vUv.x, 10.0*vUv.y, time)));
+		gl_FragColor = vec4(1,1,1,alphav/3.0);
 		//gl_FragColor = vec4(vUv.x,0.0,vUv.y,1);
 	}
 
@@ -284,12 +284,12 @@ This three.js demo is part of a collection at
 		light.position.set(100,250,100);
 		scene.add(light);*/
 
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < 8; i++) {
 			uniforms[i] = {
 				time: { type: "f", value: 1.0 },
 			};
-			uniforms[i].time.value = i*0.5;
-			var geometry = new THREE.PlaneGeometry( 400, 400 );
+			uniforms[i].time.value = i*0.25;
+			var geometry = new THREE.PlaneGeometry( 2000, 2000 );
 			var material = new THREE.ShaderMaterial({
 				uniforms: uniforms[i],
 				vertexShader: $('#vertexshader').text(),
@@ -297,7 +297,7 @@ This three.js demo is part of a collection at
 				transparent: true
 			});
 			var plane = new THREE.Mesh( geometry, material );
-			plane.position.z = -i*100;
+			plane.position.z = -i*200;
 			scene.add( plane );
 		};
 		
@@ -309,9 +309,9 @@ This three.js demo is part of a collection at
 
 	function animate() 
 	{
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < 8; i++) {
 			
-			uniforms[i].time.value += 0.5;
+			uniforms[i].time.value += 0.25;
 			
 		};
 	    requestAnimationFrame( animate );
